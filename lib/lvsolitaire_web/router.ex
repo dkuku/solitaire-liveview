@@ -1,5 +1,5 @@
-defmodule SolitaireWeb.Router do
-  use SolitaireWeb, :router
+defmodule LVSolitaireWeb.Router do
+  use LVSolitaireWeb, :router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -14,17 +14,16 @@ defmodule SolitaireWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", SolitaireWeb do
+  scope "/", LVSolitaireWeb do
     pipe_through :browser
 
     get "/", PageController, :index
 
-    live "/solitaire", SolitaireLive
-    live "/counter", CounterLive
+    live "/solitaire", LVSolitaireLive
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", SolitaireWeb do
+  # scope "/api", LVSolitaireWeb do
   #   pipe_through :api
   # end
 end

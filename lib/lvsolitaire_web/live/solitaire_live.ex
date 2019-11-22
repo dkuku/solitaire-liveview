@@ -1,4 +1,4 @@
-defmodule SolitaireWeb.SolitaireLive do
+defmodule LVSolitaireWeb.LVSolitaireLive do
   use Phoenix.LiveView
   require Logger
 
@@ -12,18 +12,18 @@ defmodule SolitaireWeb.SolitaireLive do
     <label>counter: <%= @counter %></label>
     <button phx-click="increment">+ </button>
 
-<div class="playingCards">
-    <ul class="table">
+    <div class="playingCards">
+      <ul class="table">
         <li>
-            <div class="card big joker"><span class="rank">+</span><span class="suit">Joker</span></div>
+          <div class="card big joker"><span class="rank">+</span><span class="suit">Joker</span></div>
         </li>
         <li>
-            <div class="card little joker"><span class="rank">-</span><span class="suit">Joker</span></div>
+          <div class="card little joker"><span class="rank">-</span><span class="suit">Joker</span></div>
         </li>
         <li>
-            <div class="card back">*</div>
+          <div class="card back">*</div>
         </li>
-    </ul>
+      </ul>
     </div>
     """
   end

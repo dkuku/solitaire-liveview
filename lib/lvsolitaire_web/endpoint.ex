@@ -1,8 +1,8 @@
-defmodule SolitaireWeb.Endpoint do
-  use Phoenix.Endpoint, otp_app: :solitaire
+defmodule LVSolitaireWeb.Endpoint do
+  use Phoenix.Endpoint, otp_app: :lvsolitaire
 
   socket "/live", Phoenix.LiveView.Socket
-  socket "/socket", SolitaireWeb.UserSocket,
+  socket "/socket", LVSolitaireWeb.UserSocket,
     websocket: true,
     longpoll: false
 
@@ -12,7 +12,7 @@ defmodule SolitaireWeb.Endpoint do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/",
-    from: :solitaire,
+    from: :lvsolitaire,
     gzip: false,
     only: ~w(css faces fonts images js favicon.ico robots.txt)
 
@@ -40,8 +40,8 @@ defmodule SolitaireWeb.Endpoint do
   # Set :encryption_salt if you would also like to encrypt it.
   plug Plug.Session,
     store: :cookie,
-    key: "_solitaire_key",
+    key: "_lvsolitaire_key",
     signing_salt: "BRNCb19U"
 
-  plug SolitaireWeb.Router
+  plug LVSolitaireWeb.Router
 end

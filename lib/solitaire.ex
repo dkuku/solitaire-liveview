@@ -1,2 +1,0 @@
-defmodule Solitaire do
-end

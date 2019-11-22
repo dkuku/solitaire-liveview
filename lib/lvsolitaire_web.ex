@@ -1,12 +1,12 @@
-defmodule SolitaireWeb do
+defmodule LVSolitaireWeb do
   @moduledoc """
   The entrypoint for defining your web interface, such
   as controllers, views, channels and so on.
 
   This can be used in your application as:
 
-      use SolitaireWeb, :controller
-      use SolitaireWeb, :view
+      use LVSolitaireWeb, :controller
+      use LVSolitaireWeb, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
@@ -19,11 +19,11 @@ defmodule SolitaireWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: SolitaireWeb
+      use Phoenix.Controller, namespace: LVSolitaireWeb
 
       import Plug.Conn
-      import SolitaireWeb.Gettext
-      alias SolitaireWeb.Router.Helpers, as: Routes
+      import LVSolitaireWeb.Gettext
+      alias LVSolitaireWeb.Router.Helpers, as: Routes
       import Phoenix.LiveView.Controller
     end
   end
@@ -31,8 +31,8 @@ defmodule SolitaireWeb do
   def view do
     quote do
       use Phoenix.View,
-        root: "lib/solitaire_web/templates",
-        namespace: SolitaireWeb
+        root: "lib/lvsolitaire_web/templates",
+        namespace: LVSolitaireWeb
 
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_flash: 1, get_flash: 2, view_module: 1]
@@ -40,9 +40,9 @@ defmodule SolitaireWeb do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
-      import SolitaireWeb.ErrorHelpers
-      import SolitaireWeb.Gettext
-      alias SolitaireWeb.Router.Helpers, as: Routes
+      import LVSolitaireWeb.ErrorHelpers
+      import LVSolitaireWeb.Gettext
+      alias LVSolitaireWeb.Router.Helpers, as: Routes
       import Phoenix.LiveView, only: [live_render: 2, live_render: 3, live_link: 1, live_link: 2, live_component: 2, live_component: 3, live_component: 4]
     end
   end
@@ -59,7 +59,7 @@ defmodule SolitaireWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import SolitaireWeb.Gettext
+      import LVSolitaireWeb.Gettext
     end
   end
 

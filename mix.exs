@@ -1,9 +1,9 @@
-defmodule Solitaire.MixProject do
+defmodule LVSolitaire.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :solitaire,
+      app: :lvsolitaire,
       version: "0.1.0",
       elixir: "~> 1.5",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -18,7 +18,7 @@ defmodule Solitaire.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {Solitaire.Application, []},
+      mod: {LVSolitaire.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -32,6 +32,7 @@ defmodule Solitaire.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:solitaire, github: "pascalvancauwenberghe/solitaire-elixir"},
       {:phoenix, "~> 1.4.11"},
       {:phoenix_pubsub, "~> 1.1"},
       {:phoenix_html, "~> 2.11"},

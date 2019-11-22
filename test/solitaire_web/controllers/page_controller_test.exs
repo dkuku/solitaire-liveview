@@ -1,5 +1,5 @@
-defmodule SolitaireWeb.PageControllerTest do
-  use SolitaireWeb.ConnCase
+defmodule LVSolitaireWeb.PageControllerTest do
+  use LVSolitaireWeb.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get(conn, "/")

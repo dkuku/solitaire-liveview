@@ -1,6 +1,8 @@
 # Solitaire
 Used: 
 [selfthinker/CSS-Playing-Cards](https://github.com/selfthinker/CSS-Playing-Cards)
+[pascalvancauwenberghe/solitaire-elixir](https://github.com/pascalvancauwenberghe/solitaire-elixir)
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`

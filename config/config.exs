@@ -8,11 +8,11 @@
 use Mix.Config
 
 # Configures the endpoint
-config :solitaire, SolitaireWeb.Endpoint,
+config :lvsolitaire, LVSolitaireWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "EOucjtl9bIcWtvl66o8x4xUy9WmxldHShk5hTlCo5xq35B1SM4wILV3CxrYzynK7",
-  render_errors: [view: SolitaireWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Solitaire.PubSub, adapter: Phoenix.PubSub.PG2],
+  render_errors: [view: LVSolitaireWeb.ErrorView, accepts: ~w(html json)],
+  pubsub: [name: LVSolitaire.PubSub, adapter: Phoenix.PubSub.PG2],
   live_view: [signing_salt: "Qb1iGkRyiIYJAFIgcrO1C118Yv9nWCmFc"]
 
 

@@ -1,4 +1,4 @@
-defmodule SolitaireWeb.ErrorHelpers do
+defmodule LVSolitaireWeb.ErrorHelpers do
   @moduledoc """
   Conveniences for translating and building error messages.
   """
@@ -36,9 +36,9 @@ defmodule SolitaireWeb.ErrorHelpers do
     # should be written to the errors.po file. The :count option is
     # set by Ecto and indicates we should also apply plural rules.
     if count = opts[:count] do
-      Gettext.dngettext(SolitaireWeb.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(LVSolitaireWeb.Gettext, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(SolitaireWeb.Gettext, "errors", msg, opts)
+      Gettext.dgettext(LVSolitaireWeb.Gettext, "errors", msg, opts)
     end
   end
 end

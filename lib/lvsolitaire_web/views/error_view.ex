@@ -1,5 +1,5 @@
-defmodule SolitaireWeb.ErrorView do
-  use SolitaireWeb, :view
+defmodule LVSolitaireWeb.ErrorView do
+  use LVSolitaireWeb, :view
 
   # If you want to customize a particular status code
   # for a certain format, you may uncomment below.

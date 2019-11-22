@@ -1,3 +1,3 @@
-defmodule SolitaireWeb.LayoutViewTest do
-  use SolitaireWeb.ConnCase, async: true
+defmodule LVSolitaireWeb.LayoutViewTest do
+  use LVSolitaireWeb.ConnCase, async: true
 end
