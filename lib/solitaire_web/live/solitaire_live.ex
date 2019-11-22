@@ -11,6 +11,20 @@ defmodule SolitaireWeb.SolitaireLive do
     ~L"""
     <label>counter: <%= @counter %></label>
     <button phx-click="increment">+ </button>
+
+<div class="playingCards">
+    <ul class="table">
+        <li>
+            <div class="card big joker"><span class="rank">+</span><span class="suit">Joker</span></div>
+        </li>
+        <li>
+            <div class="card little joker"><span class="rank">-</span><span class="suit">Joker</span></div>
+        </li>
+        <li>
+            <div class="card back">*</div>
+        </li>
+    </ul>
+    </div>
     """
   end
 
