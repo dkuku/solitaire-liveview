@@ -1,0 +1,11 @@
+/* This file is for your main application css. */
+
+@import "./phoenix.css";
+@import "../../deps/phoenix_live_view/assets/css/live_view.css";
+
+.selected {
+  border: 4px solid #0069d9;
+}
+.unselected {
+  opacity: 0.5;
+}
