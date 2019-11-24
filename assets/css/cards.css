@@ -10,6 +10,9 @@
 /* card itself
 ********************************************************************/
 
+.playingCards .focus {
+  box-shadow: 10px 10px 5px grey, -10px -10px 5px grey !important;
+}
 .playingCards .card {
     display: inline-block;
     width: 3.3em;
@@ -102,6 +105,7 @@
     display: block;
     line-height: 1;
     text-align: left;
+    text-transform: uppercase;
 }
 .playingCards .card .rank {
 }

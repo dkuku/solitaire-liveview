@@ -12,11 +12,38 @@
       <section class="container">
         <nav role="navigation">
           <ul>
-            <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
           </ul>
         </nav>
+        <div class="playingCards rotateHand">
+          <ul class="hand">
+            <li>
+              <div class="card  rank-9 clubs">
+                <span class="rank">9</span>
+                <span class="suit">♣</span>
+              </div>
+            </li>
+            <li>
+              <div class="card  rank-8 diams">
+                <span class="rank">8</span>
+                <span class="suit">♦</span>
+              </div>
+            </li>
+            <li>
+              <div class="card  rank-7 clubs">
+                <span class="rank">7</span>
+                <span class="suit">♣</span>
+              </div>
+            </li>
+            <li>
+              <div class="card  rank-6 hearts">
+                <span class="rank">6</span>
+                <span class="suit">♥</span>
+              </div>
+            </li>
+          </ul>
+        </div>
         <a href="http://phoenixframework.org/" class="phx-logo">
-          <img src="<%= Routes.static_path(@conn, "/images/phoenix.png") %>" alt="Phoenix Framework Logo"/>
+          <h1><b>Phoenix</b> solitaire</h1>
         </a>
       </section>
     </header>
