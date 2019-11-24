@@ -9,52 +9,85 @@ defmodule LVSolitaireWeb.LVSolitaireLive do
   require Logger
 
   def mount(_session, socket) do
-    {deck,_, _} = Deck.new
+    {reserve,tableau,foundation } = Deck.new
            |> Deck.shuffle(Enum.random(0..1))
            |> Game.new
-    socket = assign(socket, :game, deck)
+    socket = assign(socket, :reserve, reserve)
+    socket = assign(socket, :tableau, tableau)
+    socket = assign(socket, :foundation, foundation)
     {:ok, socket}
   end
 
+  #{
+#  {[stos-ukryte],[stos-widoczne]},
+#  [
+#    {[ukryte],[widoczne]},
+#    ...
+#  ],
+#  [[wiadoczne], [ wodoczne ]]
+#
+#}
+  
   def render(assigns) do
+    {invisible,visible} = assigns.reserve
     ~L"""
-
-    <div class="playingCards pile">
-      <ul class="pile">
-        <%= for card  <- elem(@game,0) do %>
-        <li>
-          <div class="card rank-<%= elem(card, 1) %> <%= elem(card, 0)%>">
-          <span class="rank"><%= elem(card,1) %></span>
-          <span class="suit">&<%= elem(card,0) %>;</span>
-          </div>
-        </li>
+    <center>
+      <div class="playingCards inline">
+        <ul class="deck inline">
+          <%= for {suit, rank}  <- invisible do %>
+            <li>
+            <div class="card back">*</div>
+            </li>
+          <% end %>
+          <%= for {suit, rank}  <- visible do %>
+            <li>
+              <div class="card rank-<%= rank %> <%= suit %>">
+                <span class="rank"><%= rank %></span>
+                <span class="suit">&<%= suit %>;</span>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <%= for color  <- assigns.foundation do %>
+        <div class="playingCards inline">
+          <ul class="deck inline">
+            <li>
+              <div class="card"></div>
+            </li>
+          <%= for {suit, rank}  <- color do %>
+            <li>
+              <div class="card rank-<%= rank %> <%= suit %>">
+                <span class="rank"><%= rank %></span>
+                <span class="suit">&<%= suit %>;</span>
+              </div>
+            </li>
+          <% end %>
+          </ul>
+        </div>
       <% end %>
-        <li>
-          <div class="card little joker"><span class="rank">-</span><span class="suit">Joker</span></div>
-        </li>
-        <li>
-          <div class="card back">*</div>
-        </li>
-      </ul>
-    </div>
-    <div class="playingCards pile">
-      <ul class="pile">
-        <%= for card  <- elem(@game,0) do %>
-        <li>
-          <div class="card rank-<%= elem(card, 1) %> <%= elem(card, 0)%>">
-          <span class="rank"><%= elem(card,1) %></span>
-          <span class="suit">&<%= elem(card,0) %>;</span>
-          </div>
-        </li>
+    </center>
+    <center>
+      <%= for {invisible, visible}  <- assigns.tableau do %>
+        <div class="playingCards inline">
+          <ul class="tableau">
+            <%= for {suit, rank}  <- invisible do %>
+              <li>
+                <div class="card back">*</div>
+              </li>
+            <% end %>
+            <%= for {suit, rank}  <- visible do %>
+              <li>
+                <div class="card rank-<%= rank %> <%= suit %>">
+                  <span class="rank"><%= rank %></span>
+                  <span class="suit">&<%= suit %>;</span>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        </div>
       <% end %>
-        <li>
-          <div class="card little joker"><span class="rank">-</span><span class="suit">Joker</span></div>
-        </li>
-        <li>
-          <div class="card back">*</div>
-        </li>
-      </ul>
-    </div>
+    </center>
     """
   end
 
@@ -65,3 +98,16 @@ defmodule LVSolitaireWeb.LVSolitaireLive do
     {:noreply, socket}
   end
 end
+
+
+  #def card(card) do
+  #{suit, rank} = {:diams, 1}
+  #~L"""
+  #<li>
+  #  <div class="card rank-<%= rank %> <%= suit %>">
+  #    <span class="rank"><%= rank %></span>
+  #    <span class="suit">&<%= suit %>;</span>
+  #  </div>
+  #</li>
+  #"""
+  #end
