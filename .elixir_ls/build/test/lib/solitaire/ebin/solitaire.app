@@ -1,9 +1,0 @@
-{application,solitaire,
-             [{applications,[kernel,stdlib,elixir,logger]},
-              {description,"solitaire"},
-              {modules,['Elixir.Solitaire','Elixir.Solitaire.Cards',
-                        'Elixir.Solitaire.Deck','Elixir.Solitaire.Foundation',
-                        'Elixir.Solitaire.Game','Elixir.Solitaire.Game.Debug',
-                        'Elixir.Solitaire.Stock','Elixir.Solitaire.Tableau']},
-              {registered,[]},
-              {vsn,"0.1.0"}]}.
