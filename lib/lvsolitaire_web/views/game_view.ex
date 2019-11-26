@@ -28,18 +28,18 @@ defmodule LVSolitaireWeb.GameView do
     <li><div class="card back">*</div></li>
     """
   end
-  def render_card(assigns, :foundation, _, index) do 
+  def render_card(assigns, pile, _, index) do 
     ~L"""
     <li><div phx-click="click-empty"
-             phx-value-pile="foundation"
-             phx-value-index="<%= "#{index}" %>"
+             phx-value-pile="<%= pile %>"
+             phx-value-index="<%= index %>"
              class="card">
     </div></li>
     """
   end
   def render_card(assigns, _, _, _) do 
     ~L"""
-    <li><div class="card"></div></li>
+    <li><div phx-click="moves" class="card"></div></li>
     """
   end
 end

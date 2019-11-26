@@ -35,11 +35,15 @@
   <%= for {{invisible, visible}, idx}  <- Enum.with_index(tableau) do %>
     <div class="playingCards inline">
       <ul class="tableau">
-        <%= for card  <- invisible do %>
-          <%= render_card(assigns, :tableau, :back, idx) %>
-        <% end %>
-        <%= for {suit, rank} = card  <- Enum.reverse(visible) do %>
-          <%= render_card(assigns, :tableau, card, idx) %>
+        <%= if len(invisible)==0 and len(visible)==0 do %>
+          <%= render_card(assigns, :tableau, :nil, idx) %>
+        <% else %>
+          <%= for card  <- invisible do %>
+            <%= render_card(assigns, :tableau, :back, idx) %>
+          <% end %>
+          <%= for {suit, rank} = card  <- Enum.reverse(visible) do %>
+            <%= render_card(assigns, :tableau, card, idx) %>
+          <% end %>
         <% end %>
       </ul>
     </div>
