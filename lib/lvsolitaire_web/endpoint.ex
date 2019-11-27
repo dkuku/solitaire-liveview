@@ -3,7 +3,7 @@ defmodule LVSolitaireWeb.Endpoint do
 
   socket "/live", Phoenix.LiveView.Socket
   socket "/socket", LVSolitaireWeb.UserSocket,
-    websocket: true,
+    websocket: [timeout: 45_000],
     longpoll: false
 
   # Serve at "/" the static files from "priv/static" directory.
