@@ -33,7 +33,7 @@ defmodule LVSolitaireWeb.GameView do
     <li><div phx-click="click-empty"
              phx-value-pile="<%= pile %>"
              phx-value-index="<%= index %>"
-             class="card">
+             class="placeholder">
     </div></li>
     """
   end
