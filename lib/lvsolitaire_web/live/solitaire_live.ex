@@ -51,14 +51,14 @@ defmodule LVSolitaireWeb.LVSolitaireLive do
     socket
     |> possible_moves()
     |> check_possible_moves(params)
-    |> perform_unclicked_move(socket, params)
+    |> perform_move_with_unselected_card(socket, params)
     |> return_socket()
   end
 
-  def perform_unclicked_move(moves, socket, params) when length(moves) == 0 do
+  def perform_move_with_unselected_card(moves, socket, params) when length(moves) == 0 do
     assign(socket, :clicked, format_card(params))
   end
-  def perform_unclicked_move(moves, socket, params) do
+  def perform_move_with_unselected_card(moves, socket, params) do
     socket
     |> assign(:game, Game.perform(socket.assigns.game, Enum.fetch!(moves, 0)))
     |> assign(:clicked, nil)
@@ -67,15 +67,15 @@ defmodule LVSolitaireWeb.LVSolitaireLive do
     socket
     |> possible_moves()
     |> filter_by_clicked(params, clicked)
-    |> perform_clicked_move(socket, params)
+    |> perform_move_with_selected_card(socket, params)
     |> return_socket()
   end
 
-  def perform_clicked_move(moves, socket, params) when length(moves) == 0 do
+  def perform_move_with_selected_card(moves, socket, params) when length(moves) == 0 do
     assign(socket, :clicked, format_card(params))
   end 
 
-  def perform_clicked_move(moves, socket, params) do
+  def perform_move_with_selected_card(moves, socket, params) do
     socket
     |> assign(:game, Game.perform(socket.assigns.game, Enum.fetch!(moves, 0)))
     |> assign(:clicked, nil)
@@ -85,13 +85,19 @@ defmodule LVSolitaireWeb.LVSolitaireLive do
 
   def handle_event("click-deck", _, socket) do
     {{deck, _}, _, _} = socket.assigns.game
-    if len(deck) > 0 do
-      socket = assign(socket, :game, Game.turn(socket.assigns.game))
-      {:noreply, socket}
-    else
-      {:noreply, socket}
-    end
+    handle_deck_click(socket, deck)
   end
+
+  def handle_deck_click(socket, deck) when length(deck) == 0 do
+    socket
+    |> return_socket()
+  end
+  def handle_deck_click(socket, deck) do
+    socket
+    |> assign(:game, Game.turn(socket.assigns.game))
+    |> return_socket()
+  end
+
   def handle_event("unselect", _, socket) do
     socket
     |> assign( :clicked, nil)

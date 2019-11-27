@@ -4,7 +4,9 @@
   <div class="playingCards inline">
     <ul class="deck inline">
       <%= if len(deck)>0 do %>
-        <%= render_card(assigns, :deck, :back) %>
+        <%= for {suit, rank} = card  <- deck do %>
+          <%= render_card(assigns, :deck, :back) %>
+        <% end %>
       <% else %>
         <%= render_card(assigns, :deck, nil) %>
       <% end %>
