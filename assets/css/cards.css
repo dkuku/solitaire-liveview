@@ -11,7 +11,15 @@
 ********************************************************************/
 
 .playingCards .focus {
-  box-shadow: 10px 10px 5px grey, -10px -10px 5px grey !important;
+  box-shadow: 0 0 20px blue !important;
+}
+.playingCards .placeholder {
+    display: inline-block;
+    width: 3.3em;
+    height: 4.6em;
+    padding: .25em;
+    margin: 0 .5em .5em 0;
+    position: relative;
 }
 .playingCards .card {
     display: inline-block;
