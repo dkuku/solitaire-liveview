@@ -6,22 +6,15 @@ defmodule LVSolitaire.Application do
   use Application
 
   def start(_type, _args) do
-    # List all child processes to be supervised
     children = [
-      # Start the endpoint when the application starts
-      LVSolitaireWeb.Endpoint
-      # Starts a worker by calling: LVSolitaire.Worker.start_link(arg)
-      # {LVSolitaire.Worker, arg},
+      LVSolitaireWeb.Endpoint,
+      {Phoenix.PubSub, [name: LVSolitaire.PubSub, adapter: Phoenix.PubSub.PG2]}
     ]
 
-    # See https://hexdocs.pm/elixir/Supervisor.html
-    # for other strategies and supported options
     opts = [strategy: :one_for_one, name: LVSolitaire.Supervisor]
     Supervisor.start_link(children, opts)
   end
 
-  # Tell Phoenix to update the endpoint configuration
-  # whenever the application is updated.
   def config_change(changed, _new, removed) do
     LVSolitaireWeb.Endpoint.config_change(changed, removed)
     :ok

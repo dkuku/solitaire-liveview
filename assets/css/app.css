@@ -2,7 +2,7 @@
 
 @import "./cards.css";
 @import "./phoenix.css";
-@import "../../deps/phoenix_live_view/assets/css/live_view.css";
+@import "./liveview.css";
 
 .selected {
   border: 4px solid #0069d9;

@@ -1,4 +1,4 @@
-defmodule LVSolitaireWeb.LVSolitaireLive do
+defmodule LVSolitaireWeb.GameLive do
   @moduledoc """
   Frontend logic
   """
@@ -9,7 +9,7 @@ defmodule LVSolitaireWeb.LVSolitaireLive do
   @ranks [:a, 2, 3, 4, 5, 6, 7, 8, 9, 10, :j, :q, :k]
   def num_to_rank(rank), do: Enum.at(@ranks, rank - 1)
 
-  def mount(_session, socket) do
+  def mount(_params, _session, socket) do
     game = Deck.new
            |> Deck.shuffle(Enum.random(0..1))
            |> Game.new
@@ -19,7 +19,102 @@ defmodule LVSolitaireWeb.LVSolitaireLive do
   end
 
   def render(assigns) do
-    LVSolitaireWeb.GameView.render("lv_solitaire.html", assigns)
+    ~L"""
+    <center>
+      <%  {reserve,tableau,foundation } = assigns.game %>
+      <%  {deck,waste} = reserve %>
+      <div class="playingCards inline">
+        <ul class="deck inline">
+          <%= if len(deck)>0 do %>
+            <%= for {suit, rank} = card  <- deck do %>
+              <%= render_card(assigns, :deck, :back) %>
+            <% end %>
+          <% else %>
+            <%= render_card(assigns, :deck, nil) %>
+          <% end %>
+        </ul>
+      </div>
+
+      <div class="playingCards inline">
+        <ul class="deck inline">
+          <%= for {suit, rank} = card  <- Enum.reverse(waste) do %>
+            <%= render_card(assigns, :deck, card, 0) %>
+          <% end %>
+        </ul>
+      </div>
+
+      <%= for {foundation, idx}  <- Enum.with_index(foundation) do %>
+        <div class="playingCards inline">
+          <ul class="deck inline">
+          <%= render_card(assigns, :foundation, nil, idx) %>
+          <%= for {suit, rank} = card <- Enum.reverse(foundation) do %>
+            <%= render_card(assigns, :foundation, card, idx) %>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+    </center>
+
+    <center phx-click="unselect">
+      <%= for {{invisible, visible}, idx}  <- Enum.with_index(tableau) do %>
+        <div class="playingCards inline">
+          <ul class="tableau">
+            <%= if len(invisible)==0 and len(visible)==0 do %>
+              <%= render_card(assigns, :tableau, :nil, idx) %>
+            <% else %>
+              <%= for card  <- invisible do %>
+                <%= render_card(assigns, :tableau, :back, idx) %>
+              <% end %>
+              <%= for {suit, rank} = card  <- Enum.reverse(visible) do %>
+                <%= render_card(assigns, :tableau, card, idx) %>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    </center>
+    """
+  end
+
+  def render_card(assigns, pile_type, card, index \\ nil) 
+  def render_card(assigns, pile_type, {suit, rank} = card, index) do 
+    ~L"""
+    <li>
+    <div phx-click="click"
+    phx-value-suit="<%= "#{suit}" %>"
+    phx-value-rank="<%= "#{rank}" %>"
+    phx-value-pile="<%= "#{pile_type}" %>"
+    phx-value-index="<%= "#{index}" %>"
+    class="card <%= focus?(assigns, card) %> rank-<%= num_to_rank( rank ) %> <%= suit %>">
+        <span class="rank"><%= num_to_rank(rank) %></span>
+        <span class="suit">&<%= suit %>;</span>
+      </div>
+    </li>
+    """
+  end
+  def render_card(assigns, :deck, :back, _) do 
+    ~L"""
+    <li><div phx-click="click-deck" class="card back">*</div></li>
+    """
+  end
+  def render_card(assigns, :tableau, :back, _) do 
+    ~L"""
+    <li><div class="card back">*</div></li>
+    """
+  end
+  def render_card(assigns, pile, _, index) do 
+    ~L"""
+    <li><div phx-click="click-empty"
+             phx-value-pile="<%= pile %>"
+             phx-value-index="<%= index %>"
+             class="placeholder">
+    </div></li>
+    """
+  end
+  def render_card(assigns, _, _, _) do 
+    ~L"""
+    <li><div phx-click="moves" class="card"></div></li>
+    """
   end
 
   def focus?(%{clicked: clicked}, clicked), do: "focus"

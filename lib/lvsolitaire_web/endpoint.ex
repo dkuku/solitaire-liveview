@@ -1,7 +1,14 @@
 defmodule LVSolitaireWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :lvsolitaire
 
-  socket "/live", Phoenix.LiveView.Socket
+  @session_options [
+	store: :cookie,
+	key: "_lvsolitaire_key",
+	signing_salt: "BRNCb19U"
+  ]
+
+  socket "/live", Phoenix.LiveView.Socket,
+    websocket: [connect_info: [session: @session_options]]
   socket "/socket", LVSolitaireWeb.UserSocket,
     websocket: [timeout: 45_000],
     longpoll: false
@@ -38,10 +45,6 @@ defmodule LVSolitaireWeb.Endpoint do
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
   # Set :encryption_salt if you would also like to encrypt it.
-  plug Plug.Session,
-    store: :cookie,
-    key: "_lvsolitaire_key",
-    signing_salt: "BRNCb19U"
-
+  plug Plug.Session, @session_options
   plug LVSolitaireWeb.Router
 end
