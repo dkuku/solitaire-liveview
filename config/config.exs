@@ -15,7 +15,6 @@ config :lvsolitaire, LVSolitaireWeb.Endpoint,
   pubsub_server: LVSolitaire.PubSub,
   live_view: [signing_salt: "Qb1iGkRyiIYJAFIgcrO1C118Yv9nWCmFc"]
 
-
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

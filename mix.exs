@@ -33,15 +33,16 @@ defmodule LVSolitaire.MixProject do
   defp deps do
     [
       {:solitaire, github: "dkuku/solitaire-elixir"},
-      {:phoenix, "~> 1.5.3"},
+      {:phoenix, "~> 1.5.8"},
       {:phoenix_pubsub, "~> 2.0"},
       {:phoenix_html, "~> 2.14"},
-      {:phoenix_live_reload, "~> 1.2", only: :dev},
+      {:phoenix_live_reload, "~> 1.3", only: :dev},
+      {:phoenix_live_dashboard, "~> 0.4"},
       {:floki, "~> 0.0.0", only: :test},
-      {:phoenix_live_view, "~> 0.13"},
+      {:phoenix_live_view, "~> 0.15"},
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.2"}
+      {:plug_cowboy, "~> 2.4"}
     ]
   end
 end

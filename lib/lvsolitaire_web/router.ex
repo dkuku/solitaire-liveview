@@ -1,5 +1,6 @@
 defmodule LVSolitaireWeb.Router do
   use LVSolitaireWeb, :router
+  import Phoenix.LiveDashboard.Router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -8,7 +9,7 @@ defmodule LVSolitaireWeb.Router do
     plug :fetch_live_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-	plug :put_root_layout, {LVSolitaireWeb.LayoutView, :root}
+    plug :put_root_layout, {LVSolitaireWeb.LayoutView, :root}
   end
 
   pipeline :api do
@@ -17,10 +18,8 @@ defmodule LVSolitaireWeb.Router do
 
   scope "/", LVSolitaireWeb do
     pipe_through :browser
-
-    get "/", PageController, :index
-
-    live "/solitaire", GameLive
+    live "/", GameLive
+    live_dashboard "/dashboard"
   end
 
   # Other scopes may use custom stacks.

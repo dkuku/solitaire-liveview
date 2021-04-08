@@ -2,13 +2,13 @@ defmodule LVSolitaireWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :lvsolitaire
 
   @session_options [
-	store: :cookie,
-	key: "_lvsolitaire_key",
-	signing_salt: "BRNCb19U"
+    store: :cookie,
+    key: "_lvsolitaire_key",
+    signing_salt: "BRNCb19U"
   ]
 
-  socket "/live", Phoenix.LiveView.Socket,
-    websocket: [connect_info: [session: @session_options]]
+  socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
+
   socket "/socket", LVSolitaireWeb.UserSocket,
     websocket: [timeout: 45_000],
     longpoll: false
