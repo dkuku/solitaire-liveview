@@ -1,3 +1,3 @@
 defmodule LVSolitaireWeb.PageView do
-  use LVSolitaireWeb, :view
+  use LVSolitaireWeb, :html
 end

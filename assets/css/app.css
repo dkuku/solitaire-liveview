@@ -1,5 +1,9 @@
 /* This file is for your main application css. */
 
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
 @import "./cards.css";
 @import "./phoenix.css";
 @import "./liveview.css";

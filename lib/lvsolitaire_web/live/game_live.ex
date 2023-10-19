@@ -5,11 +5,9 @@ defmodule LVSolitaireWeb.GameLive do
   use Phoenix.LiveView
   alias Solitaire.Game, as: Game
   alias Solitaire.Deck, as: Deck
+
+  import LVSolitaireWeb.CardComponent
   @random_max 1_000_000
-
-  @ranks [:a, 2, 3, 4, 5, 6, 7, 8, 9, 10, :j, :q, :k]
-
-  def num_to_rank(rank), do: Enum.at(@ranks, rank - 1)
 
   def mount(_params, _session, socket) do
     game =
@@ -25,18 +23,18 @@ defmodule LVSolitaireWeb.GameLive do
 
   @spec render(LiveView.Socket.assigns()) :: LiveView.Rendered.t()
   def render(assigns) do
-    ~L"""
+    ~H"""
     <center>
-      <%  {reserve,tableau,foundation } = assigns.game %>
-      <%  {deck,waste} = reserve %>
+      <% {reserve, tableau, foundation} = assigns.game %>
+      <% {deck, waste} = reserve %>
       <div class="playingCards inline">
         <ul class="deck inline">
           <%= if len(deck)>0 do %>
             <%= for _ <- deck do %>
-              <%= render_card(assigns, :deck, :back) %>
+              <.card pile={:deck} card={:back} />
             <% end %>
           <% else %>
-            <%= render_card(assigns, :deck, nil) %>
+            <.card pile={:deck} card={nil} />
           <% end %>
         </ul>
       </div>
@@ -44,7 +42,7 @@ defmodule LVSolitaireWeb.GameLive do
       <div class="playingCards inline">
         <ul class="deck inline">
           <%= for  card  <- Enum.reverse(waste) do %>
-            <%= render_card(assigns, :waste, card, 0) %>
+            <.card pile={:waste} card={card} index={0} />
           <% end %>
         </ul>
       </div>
@@ -52,10 +50,10 @@ defmodule LVSolitaireWeb.GameLive do
       <%= for {foundation, idx}  <- Enum.with_index(foundation) do %>
         <div class="playingCards inline">
           <ul class="deck inline">
-          <%= render_card(assigns, :foundation, nil, idx) %>
-          <%= for card <- Enum.reverse(foundation) do %>
-            <%= render_card(assigns, :foundation, card, idx) %>
-          <% end %>
+            <.card pile={:foundation} card={nil} index={idx} />
+            <%= for card <- Enum.reverse(foundation) do %>
+              <.card pile={:foundation} card={card} index={idx} />
+            <% end %>
           </ul>
         </div>
       <% end %>
@@ -66,13 +64,13 @@ defmodule LVSolitaireWeb.GameLive do
         <div class="playingCards inline">
           <ul class="tableau">
             <%= if len(invisible)==0 and len(visible)==0 do %>
-              <%= render_card(assigns, :tableau, :nil, idx) %>
+              <.card pile={:tableau} card={nil} index={idx} />
             <% else %>
               <%= for _card  <- invisible do %>
-                <%= render_card(assigns, :tableau, :back, idx) %>
+                <.card pile={:tableau} card={:back} index={idx} />
               <% end %>
               <%= for card  <- Enum.reverse(visible) do %>
-                <%= render_card(assigns, :tableau, card, idx) %>
+                <.card pile={:tableau} card={card} index={idx} />
               <% end %>
             <% end %>
           </ul>
@@ -81,56 +79,6 @@ defmodule LVSolitaireWeb.GameLive do
     </center>
     """
   end
-
-  @spec render_card(LiveView.Socket.assigns(), atom(), atom(), integer()) :: LiveView.Rendered.t()
-  def render_card(assigns, pile_type, card, index \\ nil)
-
-  def render_card(assigns, :deck, :back, _) do
-    ~L"""
-    <li><div phx-click="click-deck" class="card back">*</div></li>
-    """
-  end
-
-  def render_card(assigns, :tableau, :back, _) do
-    ~L"""
-    <li><div class="card back">*</div></li>
-    """
-  end
-
-  def render_card(assigns, pile, :placeholder, index) do
-    ~L"""
-    <li><div phx-click="click-empty"
-             phx-value-pile="<%= pile %>"
-             phx-value-index="<%= index %>"
-             class="placeholder">
-    </div></li>
-    """
-  end
-
-  def render_card(assigns, pile_type, {suit, rank} = card, index) do
-    ~L"""
-    <li>
-    <div phx-click="click"
-    phx-value-suit="<%= "#{suit}" %>"
-    phx-value-rank="<%= "#{rank}" %>"
-    phx-value-pile="<%= "#{pile_type}" %>"
-    phx-value-index="<%= "#{index}" %>"
-    class="card <%= focus?(assigns, card) %> rank-<%= num_to_rank( rank ) %> <%= suit %>">
-        <span class="rank"><%= num_to_rank(rank) %></span>
-        <span class="suit">&<%= suit %>;</span>
-      </div>
-    </li>
-    """
-  end
-
-  def render_card(assigns, _, _, _) do
-    ~L"""
-    <li><div phx-click="moves" class="card"></div></li>
-    """
-  end
-
-  def focus?(%{clicked: clicked}, clicked), do: "focus"
-  def focus?(%{clicked: _}, _), do: ""
 
   def possible_moves(socket), do: Game.possible_moves(socket.assigns.game) |> IO.inspect()
   # TODO fix when moveng card valid card to different pile

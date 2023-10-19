@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
@@ -12,13 +12,8 @@ config :lvsolitaire, LVSolitaireWeb.Endpoint,
   code_reloader: true,
   check_origin: false,
   watchers: [
-    node: [
-      "node_modules/webpack/bin/webpack.js",
-      "--mode",
-      "development",
-      "--watch-stdin",
-      cd: Path.expand("../assets", __DIR__)
-    ]
+    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
   ]
 
 # ## SSL Support
@@ -51,8 +46,7 @@ config :lvsolitaire, LVSolitaireWeb.Endpoint,
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/lv_lv_solitaire_web/{live,views}/.*(ex)$",
-      ~r"lib/lv_lv_solitaire_web/templates/.*(eex)$"
+      ~r"lib/lvsolitaire_web/(controllers|live|components|views)/.*(ex|heex)$"
     ]
   ]
 

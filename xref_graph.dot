@@ -1,0 +1,32 @@
+digraph "xref graph" {
+  "lib/lvsolitaire/application.ex"
+  "lib/lvsolitaire/application.ex" -> "lib/lvsolitaire_web/endpoint.ex"
+  "lib/lvsolitaire_web/endpoint.ex" -> "lib/lvsolitaire_web/channels/user_socket.ex"
+  "lib/lvsolitaire_web/endpoint.ex" -> "lib/lvsolitaire_web/router.ex"
+  "lib/lvsolitaire_web/router.ex" -> "lib/lvsolitaire_web.ex" [label="(compile)"]
+  "lib/lvsolitaire_web/router.ex" -> "lib/lvsolitaire_web/views/layout_view.ex" [label="(compile)"]
+  "lib/lvsolitaire_web/views/layout_view.ex" -> "lib/lvsolitaire_web.ex" [label="(compile)"]
+  "lib/lvsolitaire_web/views/layout_view.ex" -> "lib/lvsolitaire_web/gettext.ex" [label="(export)"]
+  "lib/lvsolitaire_web/views/layout_view.ex" -> "lib/lvsolitaire_web/router.ex"
+  "lib/lvsolitaire_web/views/layout_view.ex" -> "lib/lvsolitaire_web/views/error_helpers.ex" [label="(export)"]
+  "lib/lvsolitaire_web/views/error_helpers.ex" -> "lib/lvsolitaire_web/gettext.ex"
+  "lib/lvsolitaire_web.ex"
+  "lib/lvsolitaire_web/channels/user_socket.ex"
+  "lib/lvsolitaire_web/controllers/page_controller.ex"
+  "lib/lvsolitaire_web/controllers/page_controller.ex" -> "lib/lvsolitaire_web.ex" [label="(compile)"]
+  "lib/lvsolitaire_web/controllers/page_controller.ex" -> "lib/lvsolitaire_web/gettext.ex" [label="(export)"]
+  "lib/lvsolitaire_web/endpoint.ex"
+  "lib/lvsolitaire_web/gettext.ex"
+  "lib/lvsolitaire_web/live/game_live.ex"
+  "lib/lvsolitaire_web/router.ex"
+  "lib/lvsolitaire_web/views/error_helpers.ex"
+  "lib/lvsolitaire_web/views/error_view.ex"
+  "lib/lvsolitaire_web/views/error_view.ex" -> "lib/lvsolitaire_web.ex" [label="(compile)"]
+  "lib/lvsolitaire_web/views/error_view.ex" -> "lib/lvsolitaire_web/gettext.ex" [label="(export)"]
+  "lib/lvsolitaire_web/views/error_view.ex" -> "lib/lvsolitaire_web/views/error_helpers.ex" [label="(export)"]
+  "lib/lvsolitaire_web/views/layout_view.ex"
+  "lib/lvsolitaire_web/views/page_view.ex"
+  "lib/lvsolitaire_web/views/page_view.ex" -> "lib/lvsolitaire_web.ex" [label="(compile)"]
+  "lib/lvsolitaire_web/views/page_view.ex" -> "lib/lvsolitaire_web/gettext.ex" [label="(compile)"]
+  "lib/lvsolitaire_web/views/page_view.ex" -> "lib/lvsolitaire_web/views/error_helpers.ex" [label="(export)"]
+}

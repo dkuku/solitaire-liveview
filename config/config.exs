@@ -5,7 +5,7 @@
 # is restricted to this project.
 
 # General application configuration
-use Mix.Config
+import Config
 
 # Configures the endpoint
 config :lvsolitaire, LVSolitaireWeb.Endpoint,
@@ -14,6 +14,28 @@ config :lvsolitaire, LVSolitaireWeb.Endpoint,
   render_errors: [view: LVSolitaireWeb.ErrorView, accepts: ~w(html json)],
   pubsub_server: LVSolitaire.PubSub,
   live_view: [signing_salt: "Qb1iGkRyiIYJAFIgcrO1C118Yv9nWCmFc"]
+
+# Configure esbuild (the version is required)
+config :esbuild,
+  version: "0.17.11",
+  default: [
+    args:
+      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/* --external:/faces/*),
+    cd: Path.expand("../assets", __DIR__),
+    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+  ]
+
+# Configure tailwind (the version is required)
+config :tailwind,
+  version: "3.3.2",
+  default: [
+    args: ~w(
+      --config=tailwind.config.js
+      --input=css/app.css
+      --output=../priv/static/assets/app.css
+    ),
+    cd: Path.expand("../assets", __DIR__)
+  ]
 
 # Configures Elixir's Logger
 config :logger, :console,
