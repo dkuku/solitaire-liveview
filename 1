@@ -1,0 +1,13 @@
+defmodule LogResponseHandler do
+  def handle_event([:web, :render], measurements, metadata, _config) do
+    IO.inspect(measurements.ts)
+  end
+end
+:ok =
+  :telemetry.attach(
+    # unique handler id
+    "log-render-handler",
+    [:web, :render],
+    &LogResponseHandler.handle_event/4,
+    nil
+  )

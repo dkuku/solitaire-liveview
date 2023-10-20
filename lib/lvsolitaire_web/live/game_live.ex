@@ -1,6 +1,13 @@
 defmodule LVSolitaireWeb.GameLive do
   @moduledoc """
   Frontend logic
+
+  game data structure
+  {
+   { deck, waste} = reserve,
+   [ {invisible, visible}, ] = tableau,
+   [[], [], [], []] = foundation
+  }
   """
   use Phoenix.LiveView
   alias Solitaire.Game, as: Game
@@ -30,9 +37,7 @@ defmodule LVSolitaireWeb.GameLive do
       <div class="playingCards inline">
         <ul class="deck inline">
           <%= if len(deck)>0 do %>
-            <%= for _ <- deck do %>
-              <.card pile={:deck} card={:back} />
-            <% end %>
+            <.card pile={:deck} card={:back} />
           <% else %>
             <.card pile={:deck} card={nil} />
           <% end %>
@@ -41,19 +46,14 @@ defmodule LVSolitaireWeb.GameLive do
 
       <div class="playingCards inline">
         <ul class="deck inline">
-          <%= for  card  <- Enum.reverse(waste) do %>
-            <.card pile={:waste} card={card} index={0} />
-          <% end %>
+          <.card pile={:waste} card={Enum.at(waste, 0)} index={0} />
         </ul>
       </div>
 
       <%= for {foundation, idx}  <- Enum.with_index(foundation) do %>
         <div class="playingCards inline">
           <ul class="deck inline">
-            <.card pile={:foundation} card={nil} index={idx} />
-            <%= for card <- Enum.reverse(foundation) do %>
-              <.card pile={:foundation} card={card} index={idx} />
-            <% end %>
+            <.card pile={:foundation} card={Enum.at(foundation, 0)} index={idx} />
           </ul>
         </div>
       <% end %>
@@ -81,7 +81,7 @@ defmodule LVSolitaireWeb.GameLive do
   end
 
   def possible_moves(socket), do: Game.possible_moves(socket.assigns.game) |> IO.inspect()
-  # TODO fix when moveng card valid card to different pile
+  # TODO fix when moving valid card to different pile
   def handle_event("click-empty", params, socket) do
     socket
     |> possible_moves()
@@ -172,8 +172,6 @@ defmodule LVSolitaireWeb.GameLive do
   end
 
   def return_socket(socket) do
-    IO.inspect(socket.assigns.game)
-    IO.inspect(self())
     {:noreply, socket}
   end
 
@@ -222,9 +220,3 @@ defmodule LVSolitaireWeb.GameLive do
   def len(list) when is_tuple(list), do: 1
   def len(list) when is_list(list), do: length(list)
 end
-
-# {
-#  { deck, waste} = reserve,
-#  [ {invisible, visible}, ] = tableau,
-#  [[], [], [], []] = foundation
-# }
