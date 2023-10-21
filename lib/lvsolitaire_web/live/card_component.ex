@@ -33,13 +33,14 @@ defmodule LVSolitaireWeb.CardComponent do
   def card(%{card: {_, _}} = assigns) do
     ~H"""
     <li>
+      <% {suit, rank} = @card %>
       <div
         phx-click="click"
-        phx-value-suit={elem(@card, 0)}
-        phx-value-rank={elem(@card, 1)}
+        phx-value-suit={suit}
+        phx-value-rank={rank}
         phx-value-pile={@pile}
         phx-value-index={@index}
-        class={["card", focus?(assigns, @card), "rank-#{num_to_rank(elem(@card, 1))}", elem(@card, 0)]}
+        class={["card", focus?(assigns, @card), "rank-#{num_to_rank(rank)}", suit]}
       >
         <span class="rank"><%= num_to_rank(elem(@card, 1)) %></span>
         <span class="suit">&<%= elem(@card, 0) %>;</span>
@@ -61,6 +62,10 @@ defmodule LVSolitaireWeb.CardComponent do
   def focus?(%{}, _), do: ""
 
   @ranks [:a, 2, 3, 4, 5, 6, 7, 8, 9, 10, :j, :q, :k]
+         |> Enum.with_index(1)
+         |> Map.new(fn {a, b} -> {b, a} end)
 
-  def num_to_rank(rank), do: Enum.at(@ranks, rank - 1)
+  def num_to_rank(rank) do
+    @ranks[rank]
+  end
 end

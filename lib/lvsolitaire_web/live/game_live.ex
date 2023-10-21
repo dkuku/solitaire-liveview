@@ -55,7 +55,7 @@ defmodule LVSolitaireWeb.GameLive do
         </ul>
       </div>
 
-      <%= for {foundation, idx}  <- @foundation do %>
+      <%= for {foundation, _idx}  <- @foundation do %>
         <div class="playingCards inline">
           <ul class="deck inline">
             <.card pile={:foundation} card={foundation} />
@@ -106,7 +106,7 @@ defmodule LVSolitaireWeb.GameLive do
     |> handle_clicked_empty(params, socket)
   end
 
-  def handle_event("moves", _params, %{assigns: %{game: {{[], _}, _, _}}} = socket) do
+  def handle_event("moves", _params, %{assigns: %{deck: []}} = socket) do
     Solitaire.reshuffle(socket.assigns.pid)
 
     socket
@@ -114,7 +114,7 @@ defmodule LVSolitaireWeb.GameLive do
     |> return_socket()
   end
 
-  def handle_event("moves", _params, socket) do
+  def handle_event("moves", params, socket) do
     {:noreply, socket}
   end
 
