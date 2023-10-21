@@ -41,24 +41,24 @@ defmodule LVSolitaireWeb.GameLive do
     <center>
       <div class="playingCards inline">
         <ul class="deck inline">
-          <%= if len(@deck)>0 do %>
-            <.card pile={:deck} card={:back} />
-          <% else %>
+          <%= if @deck == [] do %>
             <.card pile={:deck} card={nil} />
+          <% else %>
+            <.card pile={:deck} card={:back} />
           <% end %>
         </ul>
       </div>
 
       <div class="playingCards inline">
         <ul class="deck inline">
-          <.card pile={:waste} card={Enum.at(@waste, 0)} index={0} />
+          <.card pile={:waste} card={@waste} />
         </ul>
       </div>
 
       <%= for {foundation, idx}  <- @foundation do %>
         <div class="playingCards inline">
           <ul class="deck inline">
-            <.card pile={:foundation} card={Enum.at(foundation, 0)} index={idx} />
+            <.card pile={:foundation} card={foundation} />
           </ul>
         </div>
       <% end %>
@@ -68,7 +68,7 @@ defmodule LVSolitaireWeb.GameLive do
       <%= for {{invisible, visible}, idx}  <- @tableau do %>
         <div class="playingCards inline">
           <ul class="tableau">
-            <%= if len(invisible)==0 and len(visible)==0 do %>
+            <%= if invisible == [] and visible == [] do %>
               <.card pile={:tableau} card={nil} index={idx} />
             <% else %>
               <%= for _card  <- invisible do %>
@@ -128,7 +128,7 @@ defmodule LVSolitaireWeb.GameLive do
     |> return_socket()
   end
 
-  def handle_clicked_empty(moves, params, socket) when length(moves) == 0 do
+  def handle_clicked_empty(moves, params, socket) when moves == [] do
     socket
     |> assign(:clicked, format_card(params))
     |> return_socket()
@@ -159,7 +159,7 @@ defmodule LVSolitaireWeb.GameLive do
     |> return_socket()
   end
 
-  def perform_move_with_unselected_card(moves, socket, params) when length(moves) == 0 do
+  def perform_move_with_unselected_card(moves, socket, params) when moves == [] do
     assign(socket, :clicked, format_card(params))
   end
 
@@ -171,7 +171,7 @@ defmodule LVSolitaireWeb.GameLive do
     |> assign(:clicked, nil)
   end
 
-  def perform_move_with_selected_card(moves, socket, params) when length(moves) == 0 do
+  def perform_move_with_selected_card(moves, socket, params) when moves == [] do
     assign(socket, :clicked, format_card(params))
   end
 
@@ -187,7 +187,7 @@ defmodule LVSolitaireWeb.GameLive do
     {:noreply, socket}
   end
 
-  def handle_deck_click(socket, deck) when length(deck) == 0 do
+  def handle_deck_click(socket, deck) when deck == [] do
     socket
     |> return_socket()
   end
@@ -239,11 +239,13 @@ defmodule LVSolitaireWeb.GameLive do
 
     socket
     |> assign(:deck, deck)
-    |> assign(:waste, waste)
+    |> assign(:waste, Enum.at(waste, 0))
+    |> assign(:foundation, foundation |> Enum.map(&first(&1)) |> Enum.with_index())
     |> assign(:tableau, Enum.with_index(tableau))
-    |> assign(:foundation, Enum.with_index(foundation))
   end
 
+  def first([]), do: nil
+  def first([hd | _]), do: hd
   def len(nil), do: 0
   def len(list) when is_tuple(list), do: 1
   def len(list) when is_list(list), do: length(list)

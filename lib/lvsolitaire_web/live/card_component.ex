@@ -3,7 +3,7 @@ defmodule LVSolitaireWeb.CardComponent do
 
   attr(:pile, :atom)
   attr(:card, :any)
-  attr(:index, :integer)
+  attr(:index, :integer, default: 0)
 
   def card(%{card: :placeholder} = assigns) do
     ~H"""
