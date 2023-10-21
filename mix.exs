@@ -33,7 +33,8 @@ defmodule LVSolitaire.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:solitaire, github: "dkuku/solitaire-elixir"},
+      # {:solitaire, github: "dkuku/solitaire-elixir"},
+      {:solitaire, path: "../solitaire-elixir"},
       {:phoenix, "~> 1.7"},
       {:phoenix_pubsub, "~> 2.1"},
       {:phoenix_html, "~> 3.3"},
