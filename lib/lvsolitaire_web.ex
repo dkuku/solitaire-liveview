@@ -23,10 +23,11 @@ defmodule LVSolitaireWeb do
     quote do
       use Phoenix.Router, helpers: false
 
-      # Import common connection and controller functions to use in pipelines
-      import Plug.Conn
       import Phoenix.Controller
       import Phoenix.LiveView.Router
+
+      # Import common connection and controller functions to use in pipelines
+      import Plug.Conn
     end
   end
 
@@ -42,8 +43,8 @@ defmodule LVSolitaireWeb do
         formats: [:html, :json],
         layouts: [html: LVSolitaireWeb.Layouts]
 
+      use Gettext, backend: LVSolitaireWeb.Gettext
       import Plug.Conn
-      import LVSolitaireWeb.Gettext
 
       unquote(verified_routes())
     end
@@ -81,11 +82,11 @@ defmodule LVSolitaireWeb do
 
   defp html_helpers do
     quote do
+      import LVSolitaireWeb.CoreComponents
+      use Gettext, backend: LVSolitaireWeb.Gettext
       # HTML escaping functionality
       import Phoenix.HTML
       # Core UI components and translation
-      import LVSolitaireWeb.CoreComponents
-      import LVSolitaireWeb.Gettext
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS

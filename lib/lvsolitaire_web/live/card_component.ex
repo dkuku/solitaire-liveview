@@ -1,4 +1,5 @@
 defmodule LVSolitaireWeb.CardComponent do
+  @moduledoc false
   use Phoenix.Component
 
   attr(:pile, :atom)
@@ -42,8 +43,8 @@ defmodule LVSolitaireWeb.CardComponent do
         phx-value-index={@index}
         class={["card", focus?(assigns, @card), "rank-#{num_to_rank(rank)}", suit]}
       >
-        <span class="rank"><%= num_to_rank(elem(@card, 1)) %></span>
-        <span class="suit">&<%= elem(@card, 0) %>;</span>
+        <span class="rank">{num_to_rank(elem(@card, 1))}</span>
+        <span class="suit">&{elem(@card, 0)};</span>
       </div>
     </li>
     """

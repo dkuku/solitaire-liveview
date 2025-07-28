@@ -1,5 +1,6 @@
 defmodule LVSolitaireWeb.Router do
   use LVSolitaireWeb, :router
+
   import Phoenix.LiveDashboard.Router
 
   pipeline :browser do

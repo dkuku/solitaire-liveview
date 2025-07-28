@@ -3,7 +3,7 @@ defmodule LVSolitaireWeb.ErrorHelpers do
   Conveniences for translating and building error messages.
   """
 
-  use Phoenix.HTML
+  import Phoenix.HTML
 
   @doc """
   Generates tag for inlined form input errors.
@@ -41,4 +41,12 @@ defmodule LVSolitaireWeb.ErrorHelpers do
       Gettext.dgettext(LVSolitaireWeb.Gettext, "errors", msg, opts)
     end
   end
+
+  def content_tag(name, content, attrs) when is_list(attrs) do
+    name = to_string(name)
+    {:safe, escaped} = html_escape(content)
+    {:safe, [?<, name, sorted_attrs(attrs), ?>, escaped, ?<, ?/, name, ?>]}
+  end
+
+  defp sorted_attrs(attrs) when is_list(attrs), do: attrs |> Enum.sort() |> attributes_escape() |> elem(1)
 end

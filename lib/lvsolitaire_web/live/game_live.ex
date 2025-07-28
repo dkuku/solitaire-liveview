@@ -10,14 +10,10 @@ defmodule LVSolitaireWeb.GameLive do
   }
   """
   use Phoenix.LiveView
-  alias Solitaire
 
   import LVSolitaireWeb.CardComponent
 
-  def mount(params, session, socket) do
-    IO.inspect(params, label: :params)
-    IO.inspect(session, label: :session)
-    IO.inspect(socket, label: :socket)
+  def mount(_params, _session, socket) do
     {:ok, pid} = Solitaire.start_link([])
 
     socket =
@@ -85,7 +81,7 @@ defmodule LVSolitaireWeb.GameLive do
     """
   end
 
-  def possible_moves(socket), do: Solitaire.possible_moves(socket.assigns.pid) |> IO.inspect()
+  def possible_moves(socket), do: socket.assigns.pid |> Solitaire.possible_moves() |> IO.inspect()
   # TODO fix when moving valid card to different pile
   def handle_event("click-empty", params, socket) do
     socket
@@ -114,7 +110,7 @@ defmodule LVSolitaireWeb.GameLive do
     |> return_socket()
   end
 
-  def handle_event("moves", params, socket) do
+  def handle_event("moves", _params, socket) do
     {:noreply, socket}
   end
 
@@ -188,8 +184,7 @@ defmodule LVSolitaireWeb.GameLive do
   end
 
   def handle_deck_click(socket, deck) when deck == [] do
-    socket
-    |> return_socket()
+    return_socket(socket)
   end
 
   def handle_deck_click(socket, _deck) do
@@ -201,8 +196,7 @@ defmodule LVSolitaireWeb.GameLive do
   end
 
   def check_possible_moves(moves, %{"index" => index, "pile" => pile_type} = _params) do
-    moves
-    |> Enum.filter(fn {pile_from, from_idx, _pile_to, _to_idx, _card} ->
+    Enum.filter(moves, fn {pile_from, from_idx, _pile_to, _to_idx, _card} ->
       from_idx == String.to_integer(index) and Atom.to_string(pile_from) == pile_type
     end)
   end
@@ -210,15 +204,13 @@ defmodule LVSolitaireWeb.GameLive do
   def filter_by_clicked(moves, _params, nil), do: moves
 
   def filter_by_clicked(moves, %{} = _params, clicked) do
-    moves
-    |> Enum.filter(fn {_pile_from, _from_idx, _pile_to, _to_idx, card} ->
+    Enum.filter(moves, fn {_pile_from, _from_idx, _pile_to, _to_idx, card} ->
       card == clicked
     end)
   end
 
   def filter_by_clicked(moves, %{"index" => index, "pile" => pile_type} = _params, clicked) do
-    moves
-    |> Enum.filter(fn {_pile_from, _from_idx, pile_to, to_idx, card} ->
+    Enum.filter(moves, fn {_pile_from, _from_idx, pile_to, to_idx, card} ->
       to_idx == String.to_integer(index) and Atom.to_string(pile_to) == pile_type and
         card == clicked
     end)

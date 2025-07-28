@@ -1,4 +1,5 @@
 defmodule LVSolitaireWeb.PileComponent do
+  @moduledoc false
   use LVSolitaireWeb, :live_component
 
   def render(assigns) do

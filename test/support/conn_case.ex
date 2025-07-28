@@ -1,4 +1,4 @@
-defmodule GalleryWeb.ConnCase do
+defmodule LVSolitaireWeb.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -20,11 +20,13 @@ defmodule GalleryWeb.ConnCase do
   using do
     quote do
       # Import conveniences for testing with connections
-      use Phoenix.ConnTest
-      alias GalleryWeb.Router.Helpers, as: Routes
+      import Plug.Conn
+      import Phoenix.ConnTest
+
+      alias LVSolitaireWeb.Router.Helpers, as: Routes
 
       # The default endpoint for testing
-      @endpoint GalleryWeb.Endpoint
+      @endpoint LVSolitaireWeb.Endpoint
     end
   end
 
