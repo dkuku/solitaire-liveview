@@ -238,7 +238,4 @@ defmodule LVSolitaireWeb.GameLive do
 
   def first([]), do: nil
   def first([hd | _]), do: hd
-  def len(nil), do: 0
-  def len(list) when is_tuple(list), do: 1
-  def len(list) when is_list(list), do: length(list)
 end
