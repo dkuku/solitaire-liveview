@@ -51,32 +51,36 @@ defmodule LVSolitaireWeb.GameLive do
         </ul>
       </div>
 
-      <%= for {foundation, _idx}  <- @foundation do %>
-        <div class="playingCards inline">
-          <ul class="deck inline">
-            <.card pile={:foundation} card={foundation} />
-          </ul>
-        </div>
-      <% end %>
+      <div :for={{foundation, idx} <- @foundation} :key={idx} class="playingCards inline">
+        <ul class="deck inline">
+          <.card pile={:foundation} card={foundation} />
+        </ul>
+      </div>
     </center>
 
     <center phx-click="unselect">
-      <%= for {{invisible, visible}, idx}  <- @tableau do %>
-        <div class="playingCards inline">
-          <ul class="tableau">
-            <%= if invisible == [] and visible == [] do %>
-              <.card pile={:tableau} card={nil} index={idx} />
-            <% else %>
-              <%= for _card  <- invisible do %>
-                <.card pile={:tableau} card={:back} index={idx} />
-              <% end %>
-              <%= for card  <- Enum.reverse(visible) do %>
-                <.card pile={:tableau} card={card} index={idx} />
-              <% end %>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
+      <div :for={{{visible, invisible}, idx} <- @tableau} :key={idx} class="playingCards inline">
+        <ul class="tableau">
+          <%= if visible == [] and invisible == [] do %>
+            <.card pile={:tableau} card={nil} index={idx} />
+          <% else %>
+            <.card
+              :for={{_card, inv_idx} <- Enum.with_index(visible)}
+              :key={"inv-#{idx}-#{inv_idx}"}
+              pile={:tableau}
+              card={:back}
+              index={idx}
+            />
+            <.card
+              :for={card <- Enum.reverse(invisible)}
+              :key={card}
+              pile={:tableau}
+              card={card}
+              index={idx}
+            />
+          <% end %>
+        </ul>
+      </div>
     </center>
     """
   end
@@ -94,8 +98,7 @@ defmodule LVSolitaireWeb.GameLive do
     handle_clicked(params, socket, socket.assigns.clicked)
   end
 
-  def handle_event("moves", params, %{assigns: %{clicked: {_rank, suit}}} = socket)
-      when suit in [1, 13] do
+  def handle_event("moves", params, %{assigns: %{clicked: {_rank, suit}}} = socket) when suit in [1, 13] do
     socket
     |> possible_moves()
     |> filter_by_clicked(params, socket.assigns.clicked)

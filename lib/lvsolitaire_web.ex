@@ -44,6 +44,7 @@ defmodule LVSolitaireWeb do
         layouts: [html: LVSolitaireWeb.Layouts]
 
       use Gettext, backend: LVSolitaireWeb.Gettext
+
       import Plug.Conn
 
       unquote(verified_routes())
@@ -82,8 +83,9 @@ defmodule LVSolitaireWeb do
 
   defp html_helpers do
     quote do
-      import LVSolitaireWeb.CoreComponents
       use Gettext, backend: LVSolitaireWeb.Gettext
+
+      import LVSolitaireWeb.CoreComponents
       # HTML escaping functionality
       import Phoenix.HTML
       # Core UI components and translation

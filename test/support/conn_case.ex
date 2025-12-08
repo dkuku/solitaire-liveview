@@ -19,9 +19,9 @@ defmodule LVSolitaireWeb.ConnCase do
 
   using do
     quote do
+      import Phoenix.ConnTest
       # Import conveniences for testing with connections
       import Plug.Conn
-      import Phoenix.ConnTest
 
       alias LVSolitaireWeb.Router.Helpers, as: Routes
 
