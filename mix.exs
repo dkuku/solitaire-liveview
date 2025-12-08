@@ -8,6 +8,7 @@ defmodule LVSolitaire.MixProject do
       elixir: "~> 1.5",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: Mix.compilers(),
+      listeners: [Phoenix.CodeReloader],
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
@@ -40,9 +41,8 @@ defmodule LVSolitaire.MixProject do
       {:phoenix_html, "~> 4.0"},
       {:phoenix_live_reload, "~> 1.4", only: :dev},
       {:phoenix_live_dashboard, "~> 0.8"},
-      {:floki, "~> 0.0", only: :test},
       {:phoenix_live_view, "~> 1.0"},
-      {:gettext, "~> 0.23"},
+      {:gettext, "~> 1.0"},
       {:telemetry_metrics, "~> 1.0"},
       {:telemetry_poller, "~> 1.0"},
       {:jason, "~> 1.4"},
